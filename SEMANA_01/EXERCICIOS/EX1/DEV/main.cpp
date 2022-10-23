@@ -1,11 +1,32 @@
+#include <iomanip>
 #include <iostream>
 #include <string>
+using namespace std;
 
 // 1 -  Faça uma função que recebe uma certa medida e ajusta ela percentualmente 
 // entre dois valores mínimo e máximo e retorna esse valor
+int proxNum(int min, int max, int med) {
+    int maxComp = max - med;
+    int minComp = med - min;
+    double diff = max - min;
+    double percent =(diff/100)*minComp;
+    cout << percent;
+    if (maxComp > minComp) {
+        cout << " O valor " << med << " está mais próximo de " << min << " na porcentagem de " << percent << endl;
+    }
+    else if (maxComp < minComp) {
+        cout << " O valor " << med << " está mais próximo de " << max << " na porcentagem de " << percent << endl;
+    };
+    return(0);
+};
 
 // 2 - Faça uma função que simule a leitura de um sensor lendo o 
 // valor do teclado ao final a função retorna este valor
+int converteSensor(int num, int min, int max) {
+    cout << "Digite o número da posição " << min << " que esteja abaixo de " << max << ": ";
+    cin >> num;
+    return(num);
+};
 
 // 3 - Faça uma função que armazena uma medida inteira qualquer 
 // em um vetor fornecido. Note que como C não possui vetores 
@@ -13,6 +34,11 @@
 // valor máximo do vetor assim como a última posição preenchida
 // Evite também que, por acidente, um valor seja escrito em 
 // uma área de memória fora do vetor
+int Vector(int val, int pos, int *v, int length){
+   int *array = v;
+   array[pos] = val;
+   return(pos + 1);
+}
 
 
 
@@ -21,12 +47,30 @@
 // A função deve retornar duas informações: A primeira é a direção 
 // de maior distância ("Direita", "Esquerda", "Frente", "Tras") e a 
 // segunda é esta maior distância.
+char* direcaoMenorCaminho(int vetor[], int *MajorVal) {
+	char* dir[] = {"Direita", "Esquerda", "Frente", "Tras"};
+	int Index;
+	for (int i = 0; i < 4; i++) {
+		if (vetor[i] > *MajorVal) {
+			*MajorVal = vetor[i];
+			Index = i;
+		};
+	};
+	return(dir[Index]);
+};
 
 
 
 
 // 5 - Faça uma função que pergunta ao usuário se ele deseja continuar o mapeamento e 
 // retorna verdadeiro ou falso
+int leComando() {
+    int Input;
+    cout << "Gostaria de reiniciar a contagem? (1/0): ";
+    cin >> Input;
+    return(Input);
+}
+
 
 
 // 6 - A função abaixo (que está incompleta) vai "dirigindo" virtualmente um robô 
@@ -49,12 +93,18 @@ int dirige(int *v,int maxv){
 	int posAtualVetor = 0;
 	int dirigindo = 1;		
 	while(dirigindo){		
-		int medida = /// .. Chame a função de de leitura da medida para a "Direita"
+		int medida = Vector(medida, posAtualVetor, vetorMov, maxVetor); /// .. Chame a função de de leitura da medida para a "Direita"
 		medida = converteSensor(medida,0,830);
-		posAtualVetor = // Chame a função para armazenar a medida no vetor
-        ///////////////////////////////////////////////////////////////////////////		
+		posAtualVetor = Vector(medida, posAtualVetor, vetorMov, maxVetor);
 		// Repita as chamadas acima para a "Esquerda", "Frente", "Tras"
-		// ................
+		medida = converteSensor(medida,1,830);
+		posAtualVetor = Vector(medida, posAtualVetor, vetorMov, maxVetor);
+
+		medida = converteSensor(medida,2,830);
+		posAtualVetor = Vector(medida, posAtualVetor, vetorMov, maxVetor);
+
+		medida = converteSensor(medida,3,830);
+		posAtualVetor = Vector(medida, posAtualVetor, vetorMov, maxVetor);
 		///////////////////////////////////////////////////////////////////////////
 		dirigindo = leComando();		
 	}
@@ -71,7 +121,7 @@ void percorre(int *v,int tamPercorrido){
 	
 	for(int i = 0; i< tamPercorrido; i+=4){
 		char *direcao = direcaoMenorCaminho(&(vetorMov[i]),&maiorDir);
-		printf("Movimentando para %s distancia = %i\n",direcao,maiorDir);
+		cout << "Movimentando para " << direcao << " distancia = " << maiorDir << "\n";
 	}
 }
 
