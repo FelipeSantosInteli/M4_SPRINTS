@@ -24,6 +24,10 @@ void setup() {
 
 void loop() {
 
+  for (int i = 0; i<4; i++) {
+    digitalWrite(Led[i],0);
+  }
+
   int btnStts_1 = digitalRead(btn_1);
   int btnStts_2 = digitalRead(btn_2);
 
@@ -77,6 +81,19 @@ void loop() {
           limt--;
         }
         limt = 3;
+
+        for (int i = 0; i<4; i++) {
+          digitalWrite(Led[i], bi[i]);
+          Serial.println(bi[i]);
+        }
+
+        delay(200);
+
+        for (int i = 0; i<4; i++) {
+          digitalWrite(Led[i],0);
+        }
+
+        delay(100);
       }
     }
     delay(300);
