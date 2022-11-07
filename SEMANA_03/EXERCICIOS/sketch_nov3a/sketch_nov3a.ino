@@ -18,8 +18,6 @@ void setup() {
   pinMode(btn_2, INPUT_PULLUP);
   pinMode(Buzz, OUTPUT);  
   pinMode(PhtR, INPUT);
-
-
 }
 
 void loop() {
@@ -35,13 +33,14 @@ void loop() {
     Serial.println("Botão 1 APERTADO");
     
     e += 1;
-    // Converte de 4096 à 16 e armazena numa array em binário //
+
     int bi[4] = {0, 0, 0, 0};
     int PhtR_Stts = analogRead(PhtR);
     int resul = floor(PhtR_Stts/256);
     int inv = 15 - resul;
     tone(Buzz, 1000 + (resul*300), 500);
     Serial.println(inv);
+
     while (inv > 0) {
       bi[limt] = inv % 2;
       inv = inv / 2;
@@ -56,11 +55,7 @@ void loop() {
   
     vect[e] = 15 - resul;
 
-
     int size = sizeof(vect)/sizeof(int);
-    // Serial.println(vect[size - 1]);
-
-
 
   delay(100);
   }
@@ -75,6 +70,7 @@ void loop() {
         int resul = 15 -inv;
         tone(Buzz, 1000 + (resul*300), 300);
         Serial.println(inv);
+        
         while (inv > 0) {
           bi[limt] = inv % 2;
           inv = inv / 2;
@@ -97,11 +93,9 @@ void loop() {
       }
     }
     delay(300);
+    for (int i = 0; i< size; i++) {
+      vect[i] = 0;
+    }
   }
-  
-  // Serial.print(bi[0]);
-  // Serial.print(bi[1]);
-  // Serial.print(bi[2]);
-  // Serial.println(bi[3]);
   delay(100);
 }
