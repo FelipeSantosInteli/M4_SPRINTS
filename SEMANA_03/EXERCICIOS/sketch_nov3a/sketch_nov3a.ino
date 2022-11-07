@@ -31,6 +31,7 @@ void loop() {
 
   if (btnStts_1 == HIGH){
     Serial.println("Botão 1 APERTADO");
+    delay(200);
     
     e += 1;
 
